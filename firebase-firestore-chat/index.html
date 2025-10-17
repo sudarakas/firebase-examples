@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Chat App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">Firebase Chat</div>
+    
+    <div class="status" id="status">Configure Firebase below...</div>
+    
+    <div class="conversation-selector">
+      <label for="conversationId">Conversation ID:</label>
+      <select id="conversationId">
+        <option value="general">General Chat</option>
+        <option value="tech-talk">Tech Talk</option>
+        <option value="random">Random</option>
+      </select>
+    </div>
+    
+    <div class="messages" id="messages"></div>
+    
+    <div class="input-area">
+      <input 
+        type="text" 
+        id="messageInput" 
+        placeholder="Type your message..." 
+        maxlength="500"
+      />
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
