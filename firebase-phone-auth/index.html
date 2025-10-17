@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firebase Phone Authentication</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Phone Auth</h1>
+      <p class="subtitle">Sign in with your phone number</p>
+
+      <div class="note">
+        <strong>Configuration Required:</strong>
+        <ol>
+          <li>Replace Firebase client config in app.js</li>
+          <li>Set your backend API URL in BACKEND_URL</li>
+          <li>Backend should use Firebase Admin SDK (service account)</li>
+          <li>Enable Phone Authentication in Firebase Console</li>
+        </ol>
+      </div>
+
+      <div id="message"></div>
+
+      <!-- Phone Number Input Section -->
+      <div id="phone-section">
+        <div class="form-group">
+          <label for="phone-number">Phone Number</label>
+          <input
+            type="tel"
+            id="phone-number"
+            placeholder="+1234567890"
+            value="+1"
+          />
+          <small class="small-text">
+            Include country code (e.g., +1 for US, +44 for UK, +91 for India)
+          </small>
+        </div>
+
+        <div id="recaptcha-container"></div>
+
+        <button id="send-code-btn" onclick="sendVerificationCode()">
+          Send Verification Code
+        </button>
+      </div>
+
+      <!-- Verification Code Input Section -->
+      <div id="verify-section" class="hidden">
+        <div class="form-group">
+          <label for="verification-code">Verification Code</label>
+          <input
+            type="text"
+            id="verification-code"
+            placeholder="Enter 6-digit code"
+            maxlength="6"
+            autocomplete="one-time-code"
+          />
+          <small class="small-text">
+            Check your SMS for the verification code
+          </small>
+        </div>
+        <button id="verify-btn" onclick="verifyCode()">Verify & Sign In</button>
+        <button
+          onclick="resetForm()"
+          style="background: #6c757d; margin-top: 10px"
+        >
+          Use Different Number
+        </button>
+      </div>
+
+      <!-- User Information Section -->
+      <div id="user-section" class="hidden">
+        <div class="user-info">
+          <h3 style="margin-bottom: 15px; color: #333">
+            Successfully Signed In
+          </h3>
+          <p><strong>Phone:</strong> <span id="user-phone"></span></p>
+          <p><strong>User ID:</strong> <span id="user-id"></span></p>
+
+          <div
+            style="
+              margin-top: 15px;
+              padding-top: 15px;
+              border-top: 1px solid #ddd;
+            "
+          >
+            <p style="margin-bottom: 8px">
+              <strong>Firebase ID Token:</strong>
+            </p>
+            <textarea
+              id="id-token"
+              readonly
+              style="
+                width: 100%;
+                min-height: 120px;
+                font-family: monospace;
+                font-size: 11px;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                resize: vertical;
+                background: #f8f9fa;
+              "
+            ></textarea>
+            <button
+              onclick="copyToken()"
+              style="background: #28a745; margin-top: 10px; padding: 10px"
+            >
+              Copy Token
+            </button>
+            <button
+              onclick="verifyWithBackend()"
+              style="background: #007bff; margin-top: 10px; padding: 10px"
+            >
+              Verify Token with Backend
+            </button>
+          </div>
+
+          <!-- Backend Verification Response -->
+          <div id="backend-verification" class="verification-status hidden">
+            <h4 style="margin-bottom: 10px; color: #333">
+              Backend Verification:
+            </h4>
+            <pre
+              id="backend-response"
+              style="margin: 0; white-space: pre-wrap; font-size: 12px"
+            ></pre>
+          </div>
+        </div>
+        <button class="logout-btn" onclick="signOut()">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.0/firebase-app-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.0/firebase-auth-compat.min.js"></script>
+
+    <!-- Application Script -->
+    <script src="app.js"></script>
+  </body>
+</html>
